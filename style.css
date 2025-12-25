@@ -1,0 +1,135 @@
+/* Temel Ayarlar */
+* {
+    margin: 0; padding: 0; box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+    background-color: #080808;
+    color: #ffffff;
+    overflow-x: hidden;
+}
+
+.hidden { display: none !important; }
+
+/* Giriş Ekranı Tasarımı */
+.container {
+    height: 100vh;
+    display: flex; justify-content: center; align-items: center;
+    background: radial-gradient(circle, #1a0033 0%, #000 100%);
+}
+
+.login-box {
+    background: rgba(15, 15, 15, 0.9);
+    padding: 40px;
+    border-radius: 15px;
+    border: 2px solid #7000ff;
+    text-align: center;
+    box-shadow: 0 0 30px rgba(112, 0, 255, 0.4);
+    width: 90%; max-width: 400px;
+}
+
+.glitch {
+    font-size: 2.5rem; color: #7000ff; margin-bottom: 20px;
+    text-shadow: 2px 2px #ff00c1;
+    animation: glow 1.5s infinite alternate;
+}
+
+input {
+    width: 100%; padding: 12px; margin: 10px 0;
+    background: #000; border: 1px solid #333;
+    color: #fff; border-radius: 8px; outline: none;
+}
+
+.login-btn {
+    width: 100%; padding: 12px; background: #7000ff;
+    border: none; color: #fff; font-weight: bold;
+    cursor: pointer; border-radius: 8px; transition: 0.3s;
+}
+
+.login-btn:hover { background: #9133ff; transform: scale(1.02); }
+
+/* Dashboard ve Sidebar */
+#dashboard { display: flex; height: 100vh; }
+
+.sidebar {
+    width: 260px; background: #0c0c0c;
+    border-right: 1px solid #222; padding: 25px;
+    display: flex; flex-direction: column;
+    transition: 0.4s;
+}
+
+.sidebar h2 { color: #7000ff; margin-bottom: 30px; text-align: center; }
+
+.sidebar nav button {
+    width: 100%;
+    padding: 10px; /* Padding'i 12'den 10'a düşürdük */
+    margin-bottom: 8px; /* Boşluğu 12'den 8'e düşürdük */
+    background: #151515;
+    border: 1px solid #7000ff;
+    color: #fff;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px; /* Mobilde daha iyi sığması için */
+    transition: 0.3s;
+}
+
+
+.sidebar nav button:hover { background: #7000ff; box-shadow: 0 0 10px #7000ff; }
+
+.logout-btn { border-color: #ff4444 !important; margin-top: auto; }
+
+/* İçerik Alanı */
+.content { flex: 1; padding: 40px; overflow-y: auto; }
+
+.stats-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px; margin: 30px 0;
+}
+
+.stat-card {
+    background: #111; padding: 25px; border-radius: 12px;
+    border-left: 5px solid #7000ff;
+}
+
+.stat-value { font-size: 28px; font-weight: bold; margin-top: 10px; }
+
+/* Tablo */
+.user-list { background: #111; padding: 20px; border-radius: 12px; }
+
+.table-wrapper { overflow-x: auto; }
+
+table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+
+th, td { padding: 15px; text-align: left; border-bottom: 1px solid #222; }
+
+th { color: #7000ff; }
+
+/* Mobil Uyumluluk */
+#menu-toggle {
+    display: none; position: fixed; top: 15px; right: 15px;
+    z-index: 1000; background: #7000ff; color: #fff;
+    border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    #menu-toggle { display: block; }
+    .sidebar {
+        position: fixed; left: -260px; z-index: 999; height: 100vh;
+    }
+    .sidebar.active { left: 0; }
+    .content { padding: 20px; padding-top: 70px; }
+}
+
+/* Animasyonlar */
+@keyframes glow {
+    from { text-shadow: 0 0 10px #7000ff; }
+    to { text-shadow: 0 0 20px #ff00c1; }
+}
+
+.pulse { animation: pulse-green 2s infinite; }
+@keyframes pulse-green {
+    0% { color: #00ff00; }
+    50% { color: #008800; }
+    100% { color: #00ff00; }
+}

